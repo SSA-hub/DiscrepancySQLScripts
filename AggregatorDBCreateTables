@@ -1,0 +1,4 @@
+create table Country (
+  country_id int primary key,
+  name varchar(80)
+);
