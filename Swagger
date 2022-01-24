@@ -1,0 +1,63 @@
+definitions:
+  Anomaly:
+    properties:
+      id:
+        type: integer
+      matchId:
+        type: integer
+      predictedCoefficient:
+        type: real
+      line:
+        type: real
+    required: 
+      -id
+      -matchId
+      -predictedCoefficient
+      -line
+  Accuracy:
+    properties:
+      date:
+        type: DateTime
+      value:
+        type: real
+    required:
+      -date
+      -value
+
+paths:
+  /anomalies:
+    get:
+      summary: Returns a list of anomalies.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+  /anomalies{anomalyId}:
+    get:
+      parameters:
+        - in: path
+          name: anomalyId
+          required: true
+          type: integer
+          minimum: 1
+          description: The ID of the anomaly to return.
+      responses:
+        200:
+          description: An anomaly object.
+          schema:
+            $ref: '#/definitions/Anomaly' 
+        400:
+          description: The specified anomaly ID is invalid (e.g. not a number).
+        404:
+          description: A anomaly with the specified ID was not found.
+        default:
+          description: Unexpected error.
+  /accuracy:
+    get:
+      summary: Returns an accuracy.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Accuracy'
