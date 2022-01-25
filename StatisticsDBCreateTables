@@ -5,6 +5,7 @@ create table StatisticsType (
 
 create table Statistics (
   statistics_id serial primary key,
+  match_id integer references Match(match_id),
   type integer references StatisticsType(type_id),
   value integer not null,
   load_time DateTime not null
