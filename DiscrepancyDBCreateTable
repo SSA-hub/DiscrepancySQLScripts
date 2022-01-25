@@ -3,11 +3,17 @@ create table AnomalyType (
   type_name varchar(80) not null unique
 );
 
+create table AlgorithmType (
+  type_id serial primary key,
+  type_name varchar(80) not null unique
+);
+
 create table Anomaly (
   anomaly_id serial primary key,
   match_id integer references Match(match_id),
   anomaly_type integer references LineType(type_id),
   anomaly_date DateTime,
+  algorithm integer references Algorithm(type_id),
   predicted_coefficient real,
   line real
 );
