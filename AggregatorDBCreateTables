@@ -30,11 +30,20 @@ create table Team (
   name varchar(80) not null unique
 );
 
+create table MatchStatuses (
+  status_id serial primary key,
+  name text not null unique
+  --not started, in progress, finished
+  --postponed, cancelled, interrupted, over time, penalty, half time, about to start, VAR
+);
+
 create table Match (
   match_id serial primary key,
   teamH integer references Team(team_id),
   teamA integer references Team(team_id),
+  status integer references MatchStatuses(status_id),
   start DateTime,
+  realStart DateTime,
   UNIQUE (teamH, teamA, start)
 );
 
@@ -44,7 +53,7 @@ create table LineType (
 );
 
 create table Line (
-  line_id serial primary key,
+  line_id bigserial primary key,
   match_id integer references Match(match_id),
   line_type integer references LineType(type_id),
   load_time DateTime,
