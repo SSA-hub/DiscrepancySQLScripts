@@ -6,5 +6,6 @@ create table StatisticsType (
 create table Statistics (
   statistics_id serial primary key,
   type integer references StatisticsType(type_id),
-  value integer not null
+  value integer not null,
+  load_time DateTime not null
 );
