@@ -1,0 +1,10 @@
+create table StatisticsType (
+  type_id serial primary key,
+  name text not null unique
+);
+
+create table Statistics (
+  statistics_id serial primary key,
+  type integer references StatisticsType(type_id),
+  value integer not null
+);
