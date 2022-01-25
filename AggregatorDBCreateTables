@@ -6,19 +6,21 @@ create table Country (
 create table Championship (
   championship_id serial primary key,
   country_id integer references Country(country_id),
-  name varchar(80) not null unique
+  name varchar(80) not null,
+  UNIQUE (country_id, name)
 );
 
 create table Season (
   season_id serial primary key,
   championship_id integer references Championship(championship_id),
-  name varchar(80) not null,
-  UNIQUE (championship_id, name)
+  start date,
+  end date,
+  UNIQUE (championship_id, start, end)
 );
 
 create table SeasonTeams (
   season_id integer references Season(season_id),
-  team_id integer references Team(team_id)
+  team_id integer references Team(team_id),
   UNIQUE (season_id, team_id)
 );
 
@@ -32,7 +34,8 @@ create table Match (
   match_id serial primary key,
   teamH integer references Team(team_id),
   teamA integer references Team(team_id),
-  UNIQUE (teamH, teamA)
+  start DateTime,
+  UNIQUE (teamH, teamA, start)
 );
 
 create table LineType (
@@ -44,5 +47,6 @@ create table Line (
   line_id serial primary key,
   match_id integer references Match(match_id),
   line_type integer references LineType(type_id),
-  coefficient real
+  load_time DateTime,
+  coefficient numeric
 );
